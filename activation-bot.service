@@ -1,0 +1,21 @@
+[Unit]
+Description=Telegram activation gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=activationbot
+Group=activationbot
+WorkingDirectory=/opt/activation-bot
+ExecStart=/usr/bin/python3 /opt/activation-bot/bot.py
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/activation-bot
+
+[Install]
+WantedBy=multi-user.target
