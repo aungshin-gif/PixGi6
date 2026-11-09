@@ -108,9 +108,9 @@ class HTTP:
         self.config = config
         self.last = {}
 
-    def request(self, url, payload=None, timeout=35):
+    def request(self, url, payload=None, timeout=35, headers=None):
         raw = None if payload is None else json.dumps(payload).encode()
-        req = urllib.request.Request(url, data=raw, headers={'Content-Type': 'application/json'})
+        req = urllib.request.Request(url, data=raw, headers={'Content-Type': 'application/json', **(headers or {})})
         try:
             with urllib.request.urlopen(req, timeout=timeout) as response:
                 return json.load(response)
@@ -135,7 +135,7 @@ class HTTP:
         url = self.config['pixel_base_url'].rstrip('/') + path
         if query:
             url += '?' + urllib.parse.urlencode(query)
-        result = self.request(url, payload)
+        result = self.request(url, payload, headers={'User-Agent': 'curl/8.5.0'})
         if not isinstance(result, dict) or 'code' not in result:
             raise RuntimeError('Invalid upstream response')
         if result['code'] != 0:
