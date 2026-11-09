@@ -1,0 +1,6 @@
+{
+  "telegram_token": "PASTE_BOTFATHER_TOKEN_HERE",
+  "admin_ids": [123456789],
+  "pixel_base_url": "https://1free.qzz.io",
+  "real_keys": {"main": "PXS-YOUR-REAL-KEY"}
+}
